@@ -17,6 +17,7 @@ path_to_model_db=
 rin_db_path=
 mmseqs2_db_path=
 mmseqs2_model_db_path=
+complex_model_db_path=
 
 microminer_exe=
 microminer_db=
