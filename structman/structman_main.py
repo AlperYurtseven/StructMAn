@@ -250,6 +250,7 @@ def structman_cli():
     update_mapping_db_from_scratch = False
     update_mapping_db_keep_raw_files = False
     update_alphafold_db = False
+    update_complex_model_db = False
     structure_limiter = None
     update_microminer = False
     microminer_from_scratch = False
@@ -292,8 +293,10 @@ def structman_cli():
 
             if 'check_search_db' in argv:
                 check_search_db = True
+            if 'complex_model_db' in argv:
+                update_complex_model_db = True
 
-            if not (update_pdb or update_rindb or update_mapping_db or update_alphafold_db or update_microminer or check_search_db):
+            if not (update_pdb or update_rindb or update_mapping_db or update_alphafold_db or update_microminer or check_search_db or update_complex_model_db):
                 print(update_util_disclaimer)
                 sys.exit(1)
 
@@ -812,6 +815,12 @@ def structman_cli():
                 config.mapping_db = 'struct_man_db_mapping'
                 config.config_parser_obj.set('user', 'mapping_db', 'struct_man_db_mapping')
                 config.check_mapping_db()
+            
+            if update_complex_model_db:
+                if not os.path.exists('/structman/resources/complex_model_db'):
+                    os.mkdir('/structman/resources/complex_model_db')
+                config.complex_model_db_path = '/structman/resources/complex_model_db'
+                config.config_parser_obj.set('user', 'complex_model_db_path', '/structman/resources/complex_model_db')
 
             f = open(config_path, 'w')
             config.config_parser_obj.write(f)
@@ -826,7 +835,7 @@ def structman_cli():
                             update_source = update_source,
                             update_microminer = update_microminer,
                             microminer_from_scratch = microminer_from_scratch,
-                            check_search_db = check_search_db
+                            check_search_db = check_search_db, update_complex_model_db = update_complex_model_db
                     )
 
     elif configure_mode:

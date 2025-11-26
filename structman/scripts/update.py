@@ -8,7 +8,7 @@ if __name__ == "__main__":
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))))
 import structman
 
-from structman.scripts import createPdbBaDb, updateMappingDB, updateAlphafoldModelDB, createCustomDb
+from structman.scripts import createPdbBaDb, updateMappingDB, updateAlphafoldModelDB, createCustomDb, updateComplexModelDB
 from structman.scripts.createMMDB import update_microminer_db
 
 
@@ -31,7 +31,7 @@ def create_mmseqs_index(infile, outfolder, mmseqs2_tmp):
 def main(
             config, skipUpdatePDB=False, skip_rindb=False, rin_fromScratch=False, update_mapping_db = False,
             mapping_db_from_scratch = False, update_mapping_db_keep_raw_files = False, update_alphafold_db = False,
-            update_source = None, update_microminer = False, microminer_from_scratch = False, check_search_db = False
+            update_source = None, update_microminer = False, microminer_from_scratch = False, check_search_db = False, update_complex_model_db = False
         ):
     mmseqs_fromScratch = False
     skipStructureDBs = False
@@ -40,11 +40,11 @@ def main(
 
     pdb_path = config.pdb_path
     pdb_update_script = config.pdb_sync_script
-    print(f'================================\nStructMAn Update Script:\n Update PDB: {not skipUpdatePDB}\n Update RIN DB: {not skipUpdatePDB}\n Update AF DB: {update_alphafold_db}\n Update Mapping DB: {update_mapping_db}\n Check Search DB: {check_search_db}\n================================')
+    print(f'================================\nStructMAn Update Script:\n Update PDB: {not skipUpdatePDB}\n Update RIN DB: {not skipUpdatePDB}\n Update AF DB: {update_alphafold_db}\n Update Mapping DB: {update_mapping_db}\n Check Search DB: {check_search_db}\n Update Complex Model DB: {update_complex_model_db}\n ================================')
 
     rinerator_base_path = config.rinerator_base_path
     rin_db_path = config.rin_db_path
-
+    complex_model_db_path = config.complex_model_db_path
     mmseqs2_db_path = config.mmseqs2_db_path
     search_db_base_path = mmseqs2_db_path.rsplit('/', 1)[0]
     mmseqs2_tmp = config.mmseqs_tmp_folder
@@ -83,6 +83,9 @@ def main(
 
         if update_alphafold_db:
             updateAlphafoldModelDB.main(config)
+        
+        if update_complex_model_db:
+            updateComplexModelDB.main(config)
 
         if not skip_rindb:
             # update rin db
