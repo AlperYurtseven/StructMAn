@@ -106,6 +106,7 @@ class Config:
         self.path_to_model_db = cfg.get('path_to_model_db', fallback='')
         self.mmseqs2_db_path = cfg.get('mmseqs2_db_path', fallback='')
         self.mmseqs2_model_db_path = cfg.get('mmseqs2_model_db_path', fallback='')
+        self.complex_model_db_path = cfg.get('complex_model_db_path', fallback='')
 
         self.model_db_active = os.path.exists(self.mmseqs2_model_db_path)
         if not is_alphafold_db_valid(self):

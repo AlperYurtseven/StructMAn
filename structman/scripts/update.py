@@ -123,6 +123,17 @@ def main(
 
             print("Model search database for MMseqs2 created!")
 
+    if update_complex_model_db:
+        complex_model_db_fasta_name = 'complex_model_db_mmseqs2'
+        config.complex_model_db_fasta_path = f'{search_db_base_path}/{complex_model_db_fasta_name}'
+        createPdbBaDb.create_complex_model_db_fasta(config, update_source = update_source)
+        
+        if config.complex_model_db_fasta_created:
+
+            create_mmseqs_index(complex_model_db_fasta_name, search_db_base_path, mmseqs2_tmp)
+
+            print("Complex Model search database for MMseqs2 created!")
+
     elif check_search_db:
         if os.path.exists(mmseqs2_db_path):
             pass

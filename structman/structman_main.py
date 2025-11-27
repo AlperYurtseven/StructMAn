@@ -172,6 +172,8 @@ def structman_cli():
         'mapping_db_from_scratch   same as mapping_db but removes an existing instance of the mapping DB.\n\n'
 
         'alphafold_db              downloads all available protein structures models created by alphafold stored at: https://alphafold.ebi.ac.uk/\n'
+
+        'complex_model_db          downloads all available protein complex models created by the Cong lab stored at: https://conglab.swmed.edu/humanPPI/\n'
     ])
 
     config_util_disclaimer = ''.join([
